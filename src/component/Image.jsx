@@ -15,7 +15,9 @@ const Image = ({ images, count }) => {
 };
 
 const ImageCircle = ({ data }) => {
-  const [status, setStatus] = useState(data?.ready ? 'loaded' : data?.error ? 'error' : 'placeholder');
+  const [status, setStatus] = useState(
+    data?.ready ? 'loaded' : data?.error ? 'error' : 'placeholder'
+  );
   const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
@@ -23,7 +25,7 @@ const ImageCircle = ({ data }) => {
       const timer = setTimeout(() => {
         if (retryCount < 3) {
           setRetryCount((prev) => prev + 1);
-          setStatus(Math.random() > 0.5 ? 'loaded' : 'error'); // Simulate success or error
+          setStatus(Math.random() > 0.5 ? 'loaded' : 'error');
         } else {
           setStatus('error');
         }
@@ -33,23 +35,23 @@ const ImageCircle = ({ data }) => {
     }
   }, [retryCount, status]);
 
-  const handleRetry = () => {
-    setStatus('loading');
-  };
+  const handleRetry = () => setStatus('loading');
 
   const renderContent = () => {
     if (status === 'loaded') {
-      return <img src={data?.url} alt="thumbnail" />;
-    } else if (status === 'error') {
+      return <img src={data?.url} alt="thumbnail" className="image" />;
+    }
+    if (status === 'error') {
       return <div className="error-icon">⚠️</div>;
-    } else if (status === 'loading') {
+    }
+    if (status === 'loading') {
       return <div className="spinner">⏳</div>;
     }
     return <div className="placeholder">+</div>;
   };
 
   return (
-    <div className="image-circle" onMouseEnter={() => console.log('Show tooltip')}>
+    <div className="image-circle">
       <Status content={`Status: ${status}, Retry Count: ${retryCount}`} />
       {renderContent()}
       {status === 'error' && retryCount < 3 && (
@@ -62,6 +64,7 @@ const ImageCircle = ({ data }) => {
 };
 
 export default Image;
+
 
 
 
