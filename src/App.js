@@ -1,21 +1,35 @@
 import React from 'react';
-import ImageLoader from './component/Image';
+import ImageComponent from './component/ImageComponent';
 import "./App.css"
 const sampleProps = {
-  name: 'Gallery Photo',
+  name: "Explorin Academy",
   count: 4,
-  images: [
-    { url: 'https://picsum.photos/id/236/100/80 ', ready: true, error: false },
-    { url: 'https://picsum.photos/id/237/100/80 ', ready: false, error: true },
-    { url: 'https://picsum.photos/id/238/100/80 ', ready: false, error: true },
-  ],
+  images: [{
+    url: "https://picsum.photos/id/236/38/38",
+    ready: true,
+    error: false
+  },
+  {
+    url: "https://picsum.photos/id/238/38/38",
+    ready: false,
+    error: false
+  },
+  {
+    url: "",
+    ready: true,
+    error: false
+  },
+  {
+    url: "",
+    ready: true,
+    error: false
+  }]
 };
 
 const App = () => {
   return (
     <div className="app-container">
-      <h1>{sampleProps.name}</h1>
-      <ImageLoader images={sampleProps.images} count={sampleProps.count} />
+      <ImageComponent images={sampleProps.images} count={sampleProps.count} name={sampleProps.name}/>
     </div>
   );
 };
