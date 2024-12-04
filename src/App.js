@@ -3,24 +3,14 @@ import ImageComponent from './component/ImageComponent';
 import "./App.css"
 const sampleProps = {
   name: "Explorin Academy",
-  count: 4,
+  count: 3,
   images: [{
     url: "https://picsum.photos/id/236/38/38",
     ready: true,
     error: false
   },
   {
-    url: "https://picsum.photos/id/238/38/38",
-    ready: false,
-    error: false
-  },
-  {
-    url: "",
-    ready: true,
-    error: false
-  },
-  {
-    url: "",
+    url: "https://picsum.photos/id/236/38/38",
     ready: true,
     error: false
   }]
