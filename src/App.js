@@ -5,7 +5,7 @@ const sampleProps = {
   name: "Explorin Academy",
   count: 3,
   images: [{
-    url: "https://picsum.photos/id/236/38/38",
+    url: "https://picsum.photos/id/23/38/38",
     ready: true,
     error: false
   },
@@ -16,7 +16,7 @@ const sampleProps = {
   },
   {
     url: "https://picsum.photos/id/236/38/38",
-    ready: false,
+    ready: true,
     error: true
   }]
 };

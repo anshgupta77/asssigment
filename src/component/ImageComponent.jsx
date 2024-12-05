@@ -2,17 +2,27 @@
 
 import errorIcon from "./../service/error.png";
 import yellow from "../service/yellow.jpg";
+import loader from "./../service/loader_gif.gif"
 import { useState } from "react";
 
 const ImageComponent = ({ name, count, images }) => {
-  const displayError = images.reduce(reducer, true);
-  function reducer(acc, ele) {
-    return acc && ele.ready; // Fixed logical AND operator for clarity
+  const [loading, setLoading] = useState(false);
+  const [displayError, setDisplayError] = useState();
+  
+
+
+  function checkReady(images){
+    const result = images.reduce((acc, image) =>acc&image.ready,true);
+    return !result;
   }
   if(images.length<4){
     while(images.length != 4)
         images = [...images, {url: yellow, ready: true, error: false}];
   }
+  setTimeout(()=>{
+    setLoading(true);
+    setDisplayError(checkReady(images));
+  }, 5000)
   
   return (
     <div className="w-full h-[200px] bg-[#0d1b2a] text-white p-6 rounded-lg flex items-center justify-between">
@@ -25,15 +35,22 @@ const ImageComponent = ({ name, count, images }) => {
           >
             {image.ready ? (
                 // Display the actual image if ready
+                loading ? (
                 <img
                   src={image.url}
                   alt="Loaded"
                   className="w-full h-full object-cover"
-                />
+                />):(
+                  <img src={loader} className="w-full h-full object-cover"></img>
+                )
               
             ) : (
               // Display error icon if image is not ready
+              loading? (
               <img src={errorIcon} alt="Error" className="w-full h-full object-cover" />
+              ):(
+                <img src={loader} className="w-full h-full object-cover"></img>
+              )
             )}
           </div>
         ))}
@@ -47,7 +64,7 @@ const ImageComponent = ({ name, count, images }) => {
         </div>
 
         {/* Large Error Icon Section */}
-        {!displayError && (
+        {displayError && (
           <div>
             <img
               src={errorIcon}
