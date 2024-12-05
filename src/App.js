@@ -11,7 +11,7 @@ const sampleProps = {
   },
   {
     url: "https://picsum.photos/id/236/38/38",
-    ready: true,
+    ready: false,
     error: false
   },
   {

@@ -3,13 +3,12 @@
 import errorIcon from "./../service/error.png";
 import yellow from "../service/yellow.jpg";
 import loader from "./../service/loader_gif.gif"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const ImageComponent = ({ name, count, images }) => {
   const [loading, setLoading] = useState(false);
   const [displayError, setDisplayError] = useState();
-  
-
+  const [countRetry, setCountRetry] = useState(0);
 
   function checkReady(images){
     const result = images.reduce((acc, image) =>acc&image.ready,true);
@@ -19,10 +18,37 @@ const ImageComponent = ({ name, count, images }) => {
     while(images.length != 4)
         images = [...images, {url: yellow, ready: true, error: false}];
   }
-  setTimeout(()=>{
-    setLoading(true);
-    setDisplayError(checkReady(images));
-  }, 5000)
+  // function increaseCount(){
+  //   const intervalID = setInterval(() =>{
+  //     const newCountRetry = countRetry+1;
+  //     setCountRetry(newCountRetry);
+  //     console.log("this here ",countRetry);
+  //     if(countRetry === 3){
+  //       setDisplayError(checkReady(images));
+  //       clearInterval(intervalID);
+  //     }
+  //   }, 2000);
+  // }
+  useEffect(() => {
+    if (countRetry < 3) {
+      const timer2 = setTimeout(() => {
+        console.log(countRetry);
+        setCountRetry((prev) => prev + 1);
+      }, 5000);
+
+      return () => clearTimeout(timer2); // Cleanup timeout
+    } else {
+      setDisplayError(checkReady(images));
+    }
+  }, [countRetry]);
+
+  useEffect(() =>{
+    const timer1 = setTimeout(()=>{
+      setLoading(true);
+    }, 5000)
+
+    return () => clearTimeout(timer1);
+  }, []);
   
   return (
     <div className="w-full h-[200px] bg-[#0d1b2a] text-white p-6 rounded-lg flex items-center justify-between">
@@ -46,7 +72,7 @@ const ImageComponent = ({ name, count, images }) => {
               
             ) : (
               // Display error icon if image is not ready
-              loading? (
+              (loading && (countRetry==3))? (
               <img src={errorIcon} alt="Error" className="w-full h-full object-cover" />
               ):(
                 <img src={loader} className="w-full h-full object-cover"></img>
