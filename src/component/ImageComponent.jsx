@@ -6,38 +6,34 @@ import { useState } from "react";
 
 const ImageComponent = ({ name, count, images }) => {
   const displayError = images.reduce(reducer, true);
+  function reducer(acc, ele) {
+    return acc && ele.ready; // Fixed logical AND operator for clarity
+  }
   if(images.length<4){
     while(images.length != 4)
         images = [...images, {url: yellow, ready: true, error: false}];
-  }
-  function reducer(acc, ele) {
-    return acc && ele.ready; // Fixed logical AND operator for clarity
   }
   
   return (
     <div className="w-full h-[200px] bg-[#0d1b2a] text-white p-6 rounded-lg flex items-center justify-between">
       {/* Image Section */}
-      <div className="flex items-center gap-2 flex-wrap w-32">
+      <div className="flex gap-[5px] flex-wrap w-[100px]">
         {images.map((image, index) => (
           <div
             key={index}
-            className="w-[45%] h-[45%] rounded-full bg-gray-500 flex items-center justify-center overflow-hidden"
+            className="w-[38px] h-[38px] rounded-full bg-gray-500 flex items-center justify-center overflow-hidden"
           >
             {image.ready ? (
-              image.url === "" ? (
-                // Display yellow placeholder if URL is empty
-                <img src={yellow} alt="Placeholder" className="w-full h-full object-cover" />
-              ) : (
                 // Display the actual image if ready
                 <img
                   src={image.url}
                   alt="Loaded"
                   className="w-full h-full object-cover"
                 />
-              )
+              
             ) : (
               // Display error icon if image is not ready
-              <img src={errorIcon} alt="Error" className="w-9 h-9" />
+              <img src={errorIcon} alt="Error" className="w-full h-full object-cover" />
             )}
           </div>
         ))}
