@@ -18,17 +18,7 @@ const ImageComponent = ({ name, count, images }) => {
     while(images.length != 4)
         images = [...images, {url: yellow, ready: true, error: false}];
   }
-  // function increaseCount(){
-  //   const intervalID = setInterval(() =>{
-  //     const newCountRetry = countRetry+1;
-  //     setCountRetry(newCountRetry);
-  //     console.log("this here ",countRetry);
-  //     if(countRetry === 3){
-  //       setDisplayError(checkReady(images));
-  //       clearInterval(intervalID);
-  //     }
-  //   }, 2000);
-  // }
+
   useEffect(() => {
     if (countRetry < 3) {
       const timer2 = setTimeout(() => {
@@ -51,8 +41,10 @@ const ImageComponent = ({ name, count, images }) => {
   }, []);
   
   return (
-    <div className="w-full h-[200px] bg-[#0d1b2a] text-white p-6 rounded-lg flex items-center justify-between">
-      {/* Image Section */}
+  <div>
+
+    <div className="w-[60%] mx-auto my-8 h-[200px] bg-[#0d1b2a] text-white p-6  flex items-center justify-between">
+
       <div className="flex gap-[5px] flex-wrap w-[100px]">
         {images.map((image, index) => (
           <div
@@ -60,7 +52,7 @@ const ImageComponent = ({ name, count, images }) => {
             className="w-[38px] h-[38px] rounded-full bg-gray-500 flex items-center justify-center overflow-hidden"
           >
             {image.ready ? (
-                // Display the actual image if ready
+              
                 loading ? (
                 <img
                   src={image.url}
@@ -71,7 +63,7 @@ const ImageComponent = ({ name, count, images }) => {
                 )
               
             ) : (
-              // Display error icon if image is not ready
+              
               (loading && (countRetry==3))? (
               <img src={errorIcon} alt="Error" className="w-full h-full object-cover" />
               ):(
@@ -82,14 +74,14 @@ const ImageComponent = ({ name, count, images }) => {
         ))}
       </div>
 
-      {/* Title Section */}
+     
       <div className="flex flex-row justify-between w-full mx-4">
         <div className="text-left">
           <h1 className="text-5xl font-bold">{name}</h1>
           <p className="text-2xl text-gray-400">{count}+ offline centers</p>
         </div>
 
-        {/* Large Error Icon Section */}
+       
         {displayError && (
           <div>
             <img
@@ -101,6 +93,7 @@ const ImageComponent = ({ name, count, images }) => {
         )}
       </div>
     </div>
+  </div>
   );
 };
 
